@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversario mi niña hermosa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #ffb6c1;
+            min-height: 100vh;
+        }
+
+        
+        #landing {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #ffb6c1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #landing.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .click-message {
+            font-size: 1.8rem;
+            color: #b0306a;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            animation: fadeInDown 0.8s ease;
+            padding: 0 20px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #heartButton {
+            font-size: 80px;
+            cursor: pointer;
+            animation: pulse 1.5s ease infinite;
+            transition: transform 0.2s ease;
+            user-select: none;
+            line-height: 1;
+        }
+
+        #heartButton:hover {
+            transform: scale(1.1);
+        }
+
+        #heartButton:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0%   { transform: scale(1); }
+            15%  { transform: scale(1.15); }
+            30%  { transform: scale(1); }
+            45%  { transform: scale(1.1); }
+            60%  { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        
+        #main {
+            display: none;
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: #ffb6c1;
+            padding-bottom: 40px;
+            overflow-x: hidden;
+        }
+
+        #main.visible {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        
+        .moon {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 35% 35%, #ffffff, #d0d0d0, #a0a0a0);
+            border-radius: 50%;
+            box-shadow: 0 0 25px #ffffff, 0 0 50px rgba(200, 200, 255, 0.5), 0 0 80px rgba(220, 220, 255, 0.3);
+            z-index: 0;
+            animation: moonGlow 3s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        @keyframes moonGlow {
+            from { box-shadow: 0 0 20px #ffffff, 0 0 40px rgba(200,200,255,0.4), 0 0 60px rgba(200,200,255,0.2); }
+            to { box-shadow: 0 0 35px #ffffff, 0 0 70px rgba(200,200,255,0.7), 0 0 100px rgba(200,200,255,0.4); }
+        }
+
+        /* Cráteres de la luna */
+        .crater {
+            position: absolute;
+            background: rgba(130, 130, 140, 0.5);
+            border-radius: 50%;
+            box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3), 0 0 2px rgba(255,255,255,0.5);
+        }
+
+        .crater1 {
+            width: 18px;
+            height: 18px;
+            top: 20px;
+            left: 25px;
+        }
+
+        .crater2 {
+            width: 12px;
+            height: 12px;
+            top: 50px;
+            left: 55px;
+        }
+
+        .crater3 {
+            width: 22px;
+            height: 22px;
+            top: 40px;
+            left: 10px;
+            opacity: 0.6;
+        }
+
+        
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .float-item {
+            position: absolute;
+            bottom: -60px;
+            font-size: 26px;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .turtles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .turtle {
+            position: absolute;
+            font-size: 36px;
+            animation: walkTurtle linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes walkTurtle {
+            0%   { transform: translateX(-120%) translateY(0); }
+            100% { transform: translateX(110vw) translateY(-18px); }
+        }
+
+        .turtle-to-moon {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 40px;
+            z-index: 2;
+            pointer-events: none;
+            transition: none;
+        }
+
+        /* Tarjeta */
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px);
+            border-radius: 30px;
+            padding: 35px 25px;
+            max-width: 520px;
+            width: 90%;
+            margin: 60px auto 0;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.5);
+            animation: fadeInUp 1.2s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h1 {
+            font-size: 2.6rem;
+            color: #b0306a;
+            margin-bottom: 6px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .phrase {
+            font-size: 1.2rem;
+            color: #6d2c4a;
+            margin-bottom: 18px;
+            background: rgba(255,255,255,0.35);
+            display: inline-block;
+            padding: 6px 22px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+        }
+
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 18px auto;
+            border: 4px solid rgba(255,255,255,0.8);
+            box-shadow: 0 0 18px rgba(255,255,255,0.5);
+            background: #f8d7da;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-photo {
+            color: #7a4b5c;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .counter-box {
+            background: rgba(0,0,0,0.08);
+            border-radius: 18px;
+            padding: 14px;
+            margin: 18px 0;
+        }
+
+        .counter-box p {
+            font-size: 1rem;
+            color: #4a2c3a;
+        }
+
+        #days-counter {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #b0306a;
+            display: block;
+            margin: 6px 0;
+        }
+
+        .love-message {
+            font-size: 1.05rem;
+            color: #3d2330;
+            line-height: 1.6;
+            margin-top: 14px;
+            background: rgba(255,255,255,0.3);
+            padding: 14px;
+            border-radius: 14px;
+            font-style: italic;
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #6d2c4a;
+            font-weight: 500;
+        }
+
+        .btn-leer {
+            display: inline-block;
+            margin-top: 22px;
+            background: #b0306a;
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(176,48,106,0.4);
+        }
+
+        .btn-leer:hover {
+            background: #8b2552;
+            transform: translateY(-2px);
+        }
+
+        .btn-leer:active {
+            transform: scale(0.96);
+        }
+
+        
+        #letter {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #d4a5d4;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #letter.visible {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        
+        #letterHeartsContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1999;
+        }
+
+        .letter-card {
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(18px);
+            border-radius: 28px;
+            padding: 35px 25px;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 2001;
+        }
+
+        .letter-card h2 {
+            font-size: 2rem;
+            color: #4a1942;
+            margin-bottom: 18px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+        }
+
+        .letter-content-box {
+            background: rgba(255,255,255,0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 200px;
+            max-height: 55vh;
+            overflow-y: auto;
+            text-align: left;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #2e1a2c;
+            border: 1px dashed rgba(255,255,255,0.8);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 18px;
+            background: #4a1942;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #31102b;
+        }
+
+        @media (max-width: 500px) {
+            .click-message { font-size: 1.4rem; }
+            .moon { width: 60px; height: 60px; top: 18px; right: 18px; }
+            .crater1 { width: 12px; height: 12px; top: 14px; left: 18px; }
+            .crater2 { width: 8px; height: 8px; top: 34px; left: 40px; }
+            .crater3 { width: 15px; height: 15px; top: 28px; left: 6px; }
+            .card { padding: 25px 18px; }
+            .card h1 { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="landing">
+        <p class="click-message">Hola mi princesita hermosa,<br>dele click a mi corazón 🥰</p>
+        <div id="heartButton">♥️</div>
+    </div>
+
+
+    <div id="main">
+        
+        <div class="moon">
+            <div class="crater crater1"></div>
+            <div class="crater crater2"></div>
+            <div class="crater crater3"></div>
+        </div>
+
+        <div class="hearts-container" id="heartsContainer"></div>
+        <div class="turtles-container" id="turtlesContainer"></div>
+        <div class="turtle-to-moon" id="turtleToMoon">🐢</div>
+
+        <div class="card">
+            <h1>🤍 12 Meses 🤍</h1>
+            <div class="phrase">🐢 La amo de aquí a la luna a pasitos de tortuga 🌙</div>
+
+            <div class="photo-frame">
+                <img id="couplePhoto" src="https://i.ibb.co/bMSRJy4d/juntos.jpg" alt="Nuestra foto juntos" style="display: none;">
+                <span class="no-photo" id="noPhotoText">📸 Nuestra foto</span>
+            </div>
+
+            <div class="counter-box">
+                <p>Llevamos juntos</p>
+                <span id="days-counter">0</span>
+                <p>días amándonos a pasitos de tortuga 🥰🐢</p>
+            </div>
+
+            <div class="love-message">
+                Entre tantas vueltas que da la vida, <br>
+                usted llegó para convertirse en mi lugar favorito.<br>
+                Y ahora entiendo que el amor sí existe,<br>
+                porque lo veo en su sonrisa, en sus ojitos hermosos y <br>
+                en su forma de hablarme, su ser y su esencia<br>
+                y en cómo hace que mis días sean más bonitos sin siquiera intentarlo.<br>
+                Tal vez no soy perfecto expresando lo que siento,<br>
+                pero hay algo que sí quiero que siempre le quede clarines,<br>
+                la amo con todo mi alma,<br>
+                y este primer año con usted<br>
+                ha sido el más bonito de mi vida y la mayor bendición 🐢🤍
+            </div>
+
+            <div class="signature">
+                Con todo mi amor,<br>
+                <strong>Jony Osorio</strong>
+            </div>
+
+            <button class="btn-leer" id="btnLeer">Leaa</button>
+        </div>
+    </div>
+
+    <div id="letter">
+
+        <div id="letterHeartsContainer"></div>
+
+        <div class="letter-card">
+            <h2>Para Usted 🤍</h2>
+            <div class="letter-content-box">
+Como diría mi abuelo, "es un vergazal de tiempo" que llevamos juntos y es así, mi moradito lila. Mucho, mucho tiempo compartiendo momentos muy felices juntitos. Creame que una de las mejores deciciones que he tomado en mi vida, fue responderle a esa historia, de hecho fue la mejor decisión, si no lo hubiese hecho no sabría lo hermoso que se siente tener algo así y amar, gracias a Dios que amo a una niña tan hermosa y perfecta como lo es usted, la niña que me robó el corazón, la niña que vive en mi mente y corazón durante 12 meses, la niña más hermosa del mundo, la niña con la cual yo quiero todo, la niña que me hace demasiado feliz. 
+
+Y es un año lleno de risas, de mensajear todos los días y de sueños que construimos juntos aunque nos falte mucho por cumplirlo pero lo haremos. Y cada día me enamoro más de usted, de esos ojitos hermosos que me enamoraron desde el primer momento que la vi. Esos ojitos que me hicieron querer hacerla mía desde el primer día que la vi, y lo hice jeje. Recuerdo la primer vez que la besé eso fue demasiado lindo y especial, la amo con mi vida entera mi colochita hermosa.
+
+Me siento el hombre más afortunado de tenerla en mi vida, le agradezco todo este tiempo que hemos compartido juntos, cada momento que hizo espacio para poder vernos, lo mucho que me hace feliz
+y el amor que me da. Usted se ha vuelto de lo más importante y especial que tengo en mi vida, espero que mi amor por usted lo haya sentido durante este año y nunca lo haya dudado quizás
+no seré el novio perfecto pero quiero que lo sepa siempre, la amo con toda mi alma, la única niña que mi coraón derrite y la única niña que yo quiero en mi vida y amarla eternamente.
+
+Todo este tiempo compartido juntos ha sido de la experiencia más hermosa que he vivido en mi vida, nos falta mucho camino por recorrer, muchas cosas por experimentar juntos, valoro mucho el amor que me tiene, espero este no sea el único año que sean miles más que esa tortuguita nunca encuentre la luna, que los ojitos los tenga en el culito y camine al reves.
+Y que esos ojitos hermosos solo me vean a mi para toda la vida, en todos mis planes a futuro está usted, mi corazón la elige una y millones de veces solo a usted, la niña que yo eligiría en esta
+y en todas las posibles, y que cuando muramos si existe la reencarnacíon, seamos dos tortuguitas que naveguen en el océano juntas y muy felices durante el día, y que durante la noche salga a explorar todo el universo y que se besen mucho y se amen toda una eternidad.
+
+Feliz 12 meses mi vida, es usted la mayor bendición que me pudo dar la vida y Dios, espero sean muchos años más juntos no solo este, es usted el amor de mi vida,
+la dueña de mi corazón. 
+La amo muchooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooomiojitoshermososooooooooooooooooooooooooooooooo de aqui a la luna
+a pasitos de tortuga 🐢🤍
+Siempre suyo,
+Amin 
+            </div>
+            <button class="btn-back" id="btnBack">Vuelva</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const landing = document.getElementById('landing');
+            const heartBtn = document.getElementById('heartButton');
+            const main = document.getElementById('main');
+            const btnLeer = document.getElementById('btnLeer');
+            const letter = document.getElementById('letter');
+            const btnBack = document.getElementById('btnBack');
+            const heartsContainer = document.getElementById('heartsContainer');
+            const turtlesContainer = document.getElementById('turtlesContainer');
+            const couplePhoto = document.getElementById('couplePhoto');
+            const noPhotoText = document.getElementById('noPhotoText');
+            const daysCounter = document.getElementById('days-counter');
+            const turtleToMoon = document.getElementById('turtleToMoon');
+            const letterHeartsContainer = document.getElementById('letterHeartsContainer');
+
+            heartBtn.addEventListener('click', () => {
+                landing.classList.add('hidden');
+                main.classList.add('visible');
+                startMainAnimations();
+                startTurtleToMoon();
+            });
+
+            btnLeer.addEventListener('click', () => {
+                letter.classList.add('visible');
+                startLetterAnimations();
+            });
+
+            btnBack.addEventListener('click', () => {
+                letter.classList.remove('visible');
+                stopLetterAnimations();
+            });
+
+            
+            let mainAnimationsStarted = false;
+            let mainIntervals = [];
+
+            function startMainAnimations() {
+                if (mainAnimationsStarted) return;
+                mainAnimationsStarted = true;
+
+                function createFloatItem() {
+                    const item = document.createElement('div');
+                    item.classList.add('float-item');
+                    item.innerHTML = Math.random() < 0.5 ? '🤍' : '✨';
+                    item.style.left = Math.random() * 100 + '%';
+                    item.style.fontSize = (Math.random() * 22 + 20) + 'px';
+                    item.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                    heartsContainer.appendChild(item);
+                    setTimeout(() => item.remove(), 9000);
+                }
+                const floatInterval = setInterval(createFloatItem, 600);
+                mainIntervals.push(floatInterval);
+                for (let i = 0; i < 8; i++) setTimeout(createFloatItem, i * 250);
+
+                function createTurtle() {
+                    const turtle = document.createElement('div');
+                    turtle.classList.add('turtle');
+                    turtle.innerHTML = '🐢';
+                    turtle.style.top = (Math.random() * 75 + 10) + '%';
+                    turtle.style.animationDuration = (Math.random() * 18 + 18) + 's';
+                    turtle.style.fontSize = (Math.random() * 22 + 30) + 'px';
+                    turtle.style.opacity = (Math.random() * 0.3 + 0.5);
+                    turtlesContainer.appendChild(turtle);
+                    setTimeout(() => turtle.remove(), 38000);
+                }
+                const turtleInterval = setInterval(createTurtle, 3500);
+                mainIntervals.push(turtleInterval);
+                for (let i = 0; i < 4; i++) setTimeout(createTurtle, i * 700);
+            }
+
+            
+            function startTurtleToMoon() {
+                const moonX = window.innerWidth - 120;
+                const moonY = 75;
+                let turtleX = 20;
+                let turtleY = window.innerHeight - 80;
+                turtleToMoon.style.left = turtleX + 'px';
+                turtleToMoon.style.top = turtleY + 'px';
+
+                function moveStep() {
+                    const dx = moonX - turtleX;
+                    const dy = moonY - turtleY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 50) {
+                        turtleX = 20;
+                        turtleY = window.innerHeight - 80;
+                        turtleToMoon.style.left = turtleX + 'px';
+                        turtleToMoon.style.top = turtleY + 'px';
+                        setTimeout(moveStep, 300);
+                        return;
+                    }
+
+                    const stepSize = 1.2;
+                    const normX = dx / distance;
+                    const normY = dy / distance;
+                    turtleX += normX * stepSize;
+                    turtleY += normY * stepSize;
+
+                    turtleToMoon.style.left = turtleX + 'px';
+                    turtleToMoon.style.top = turtleY + 'px';
+
+                    setTimeout(moveStep, 40);
+                }
+                moveStep();
+            }
+
+            window.addEventListener('resize', () => {
+                if (main.classList.contains('visible')) {
+                    turtleToMoon.style.left = '20px';
+                    turtleToMoon.style.top = (window.innerHeight - 80) + 'px';
+                }
+            });
+
+            let letterInterval = null;
+
+            function startLetterAnimations() {
+                if (letterInterval) return;
+                function createLetterFloat() {
+                    const item = document.createElement('div');
+                    item.classList.add('float-item');
+                    item.innerHTML = Math.random() < 0.5 ? '🤍' : '✨';
+                    item.style.left = Math.random() * 100 + '%';
+                    item.style.fontSize = (Math.random() * 22 + 20) + 'px';
+                    item.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                    letterHeartsContainer.appendChild(item);
+                    setTimeout(() => item.remove(), 9000);
+                }
+                letterInterval = setInterval(createLetterFloat, 500);
+                for (let i = 0; i < 6; i++) setTimeout(createLetterFloat, i * 200);
+            }
+
+            function stopLetterAnimations() {
+                if (letterInterval) {
+                    clearInterval(letterInterval);
+                    letterInterval = null;
+                }
+                
+                letterHeartsContainer.innerHTML = '';
+            }
+
+            const inicio = new Date(2025, 4, 12);
+            function updateCounter() {
+                const ahora = new Date();
+                const diff = ahora - inicio;
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                daysCounter.textContent = dias;
+            }
+            updateCounter();
+            if (couplePhoto.src && couplePhoto.src.trim() !== '' && !couplePhoto.src.endsWith('index.html')) {
+                couplePhoto.style.display = 'block';
+                noPhotoText.style.display = 'none';
+            } else {
+                couplePhoto.style.display = 'none';
+                noPhotoText.style.display = 'block';
+            }
+
+            couplePhoto.addEventListener('load', () => {
+                couplePhoto.style.display = 'block';
+                noPhotoText.style.display = 'none';
+            });
+            couplePhoto.addEventListener('error', () => {
+                couplePhoto.style.display = 'none';
+                noPhotoText.style.display = 'block';
+            });
+        })();
+    </script>
+</body>
+</html>
