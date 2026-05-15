@@ -289,17 +289,18 @@
             margin: 18px 0;
         }
 
-        .counter-box p {
-            font-size: 1rem;
+        /* Ya no usamos estilos específicos para #days-counter, se aplican al párrafo dinámico */
+        #counter-text {
+            font-size: 1.1rem;
             color: #4a2c3a;
+            line-height: 1.6;
+            font-weight: bold;
         }
 
-        #days-counter {
-            font-size: 2.8rem;
-            font-weight: bold;
+        #counter-text span {
+            font-size: 2rem;
             color: #b0306a;
             display: block;
-            margin: 6px 0;
         }
 
         .love-message {
@@ -473,11 +474,11 @@
                 <span class="no-photo" id="noPhotoText">📸 Nuestra foto</span>
             </div>
 
+            <!-- ===== CAMBIO AQUÍ: Contador de años, meses y días ===== -->
             <div class="counter-box">
-                <p>Llevamos juntos</p>
-                <span id="days-counter">0</span>
-                <p>días amándonos a pasitos de tortuga 🥰🐢</p>
+                <p id="counter-text"></p>
             </div>
+            <!-- ===== FIN DEL CAMBIO ===== -->
 
             <div class="love-message">
                 Entre tantas vueltas que da la vida, <br>
@@ -544,7 +545,8 @@ Amin
             const turtlesContainer = document.getElementById('turtlesContainer');
             const couplePhoto = document.getElementById('couplePhoto');
             const noPhotoText = document.getElementById('noPhotoText');
-            const daysCounter = document.getElementById('days-counter');
+            // Ya no usamos daysCounter, se reemplaza por counterText
+            const counterText = document.getElementById('counter-text');
             const turtleToMoon = document.getElementById('turtleToMoon');
             const letterHeartsContainer = document.getElementById('letterHeartsContainer');
 
@@ -674,14 +676,53 @@ Amin
                 letterHeartsContainer.innerHTML = '';
             }
 
-            const inicio = new Date(2025, 4, 12);
-            function updateCounter() {
+            // ===== CAMBIO AQUÍ: Contador de años, meses y días =====
+            const inicio = new Date(2025, 4, 12); // 12 de mayo de 2025 - Fecha de aniversario
+
+            function actualizarContador() {
                 const ahora = new Date();
-                const diff = ahora - inicio;
-                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-                daysCounter.textContent = dias;
+                let years = ahora.getFullYear() - inicio.getFullYear();
+                let months = ahora.getMonth() - inicio.getMonth();
+                let days = ahora.getDate() - inicio.getDate();
+
+                // Ajuste si los días son negativos
+                if (days < 0) {
+                    months--;
+                    const ultimoMes = new Date(ahora.getFullYear(), ahora.getMonth(), 0);
+                    days += ultimoMes.getDate();
+                }
+
+                // Ajuste si los meses son negativos
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                // Construir la cadena de texto
+                let texto = 'Llevamos juntos<br>';
+
+                // Años
+                texto += years === 1 ? '1 año' : years + ' años';
+
+                // Meses (si hay)
+                if (months > 0) {
+                    texto += months === 1 ? ' y 1 mes' : ' y ' + months + ' meses';
+                }
+
+                // Días
+                if (days === 1) {
+                    texto += ' con 1 día';
+                } else {
+                    texto += ' con ' + days + ' días';
+                }
+
+                texto += '<br>amándonos a pasitos de tortuga 🥰🐢';
+
+                counterText.innerHTML = texto;
             }
-            updateCounter();
+            actualizarContador();
+            // ===== FIN DEL CAMBIO =====
+
             if (couplePhoto.src && couplePhoto.src.trim() !== '' && !couplePhoto.src.endsWith('index.html')) {
                 couplePhoto.style.display = 'block';
                 noPhotoText.style.display = 'none';
