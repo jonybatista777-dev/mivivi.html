@@ -18,7 +18,7 @@
             min-height: 100vh;
         }
 
-        
+        /* Landing */
         #landing {
             position: fixed;
             top: 0;
@@ -82,7 +82,7 @@
             100% { transform: scale(1); }
         }
 
-        
+        /* Main */
         #main {
             display: none;
             position: relative;
@@ -103,7 +103,7 @@
             to { opacity: 1; }
         }
 
-        
+        /* Luna */
         .moon {
             position: fixed;
             top: 30px;
@@ -114,8 +114,8 @@
             border-radius: 50%;
             box-shadow: 0 0 25px #ffffff, 0 0 50px rgba(200, 200, 255, 0.5), 0 0 80px rgba(220, 220, 255, 0.3);
             z-index: 0;
-            animation: moonGlow 3s ease-in-out infinite alternate;
             position: relative;
+            animation: moonGlow 3s ease-in-out infinite alternate;
         }
 
         @keyframes moonGlow {
@@ -123,7 +123,6 @@
             to { box-shadow: 0 0 35px #ffffff, 0 0 70px rgba(200,200,255,0.7), 0 0 100px rgba(200,200,255,0.4); }
         }
 
-        /* Cráteres de la luna */
         .crater {
             position: absolute;
             background: rgba(130, 130, 140, 0.5);
@@ -131,30 +130,12 @@
             box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3), 0 0 2px rgba(255,255,255,0.5);
         }
 
-        .crater1 {
-            width: 18px;
-            height: 18px;
-            top: 20px;
-            left: 25px;
-        }
+        .crater1 { width: 18px; height: 18px; top: 20px; left: 25px; }
+        .crater2 { width: 12px; height: 12px; top: 50px; left: 55px; }
+        .crater3 { width: 22px; height: 22px; top: 40px; left: 10px; opacity: 0.6; }
 
-        .crater2 {
-            width: 12px;
-            height: 12px;
-            top: 50px;
-            left: 55px;
-        }
-
-        .crater3 {
-            width: 22px;
-            height: 22px;
-            top: 40px;
-            left: 10px;
-            opacity: 0.6;
-        }
-
-        
-        .hearts-container {
+        /* Elementos flotantes */
+        .hearts-container, .turtles-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -173,24 +154,8 @@
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .turtles-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
         .turtle {
@@ -276,11 +241,7 @@
             display: block;
         }
 
-        .no-photo {
-            color: #7a4b5c;
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
+        .no-photo { color: #7a4b5c; font-size: 0.9rem; opacity: 0.7; }
 
         .counter-box {
             background: rgba(0,0,0,0.08);
@@ -289,7 +250,6 @@
             margin: 18px 0;
         }
 
-        /* Ya no usamos estilos específicos para #days-counter, se aplican al párrafo dinámico */
         #counter-text {
             font-size: 1.1rem;
             color: #4a2c3a;
@@ -301,6 +261,22 @@
             font-size: 2rem;
             color: #b0306a;
             display: block;
+        }
+
+        /* NUEVO: Mensaje mensual */
+        #mensaje-mensual {
+            display: none; /* Se muestra solo el día 12 */
+            margin: 20px 0 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.7);
+            animation: fadeIn 0.8s ease;
+            font-size: 1.3rem;
+            color: #b0306a;
+            font-weight: 700;
+            text-shadow: 1px 1px 0 white;
         }
 
         .love-message {
@@ -337,23 +313,15 @@
             box-shadow: 0 4px 12px rgba(176,48,106,0.4);
         }
 
-        .btn-leer:hover {
-            background: #8b2552;
-            transform: translateY(-2px);
-        }
+        .btn-leer:hover { background: #8b2552; transform: translateY(-2px); }
+        .btn-leer:active { transform: scale(0.96); }
 
-        .btn-leer:active {
-            transform: scale(0.96);
-        }
-
-        
+        /* Carta */
         #letter {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
             background: #d4a5d4;
             z-index: 2000;
             justify-content: center;
@@ -362,18 +330,12 @@
             overflow-y: auto;
         }
 
-        #letter.visible {
-            display: flex;
-            animation: fadeIn 0.5s ease;
-        }
+        #letter.visible { display: flex; animation: fadeIn 0.5s ease; }
 
-        
         #letterHeartsContainer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 1999;
         }
@@ -430,9 +392,7 @@
             transition: background 0.3s ease;
         }
 
-        .btn-back:hover {
-            background: #31102b;
-        }
+        .btn-back:hover { background: #31102b; }
 
         @media (max-width: 500px) {
             .click-message { font-size: 1.4rem; }
@@ -446,15 +406,14 @@
     </style>
 </head>
 <body>
-    
+    <!-- Landing -->
     <div id="landing">
         <p class="click-message">Hola mi princesita hermosa,<br>dele click a mi corazón 🥰</p>
         <div id="heartButton">♥️</div>
     </div>
 
-
+    <!-- Main -->
     <div id="main">
-        
         <div class="moon">
             <div class="crater crater1"></div>
             <div class="crater crater2"></div>
@@ -474,7 +433,9 @@
                 <span class="no-photo" id="noPhotoText">📸 Nuestra foto</span>
             </div>
 
-        
+            <!-- NUEVO: Mensaje especial del día 12 -->
+            <div id="mensaje-mensual"></div>
+
             <div class="counter-box">
                 <p id="counter-text"></p>
             </div>
@@ -502,10 +463,9 @@
         </div>
     </div>
 
+    <!-- Carta -->
     <div id="letter">
-
         <div id="letterHeartsContainer"></div>
-
         <div class="letter-card">
             <h2>Para Usted 🤍</h2>
             <div class="letter-content-box">
@@ -544,16 +504,18 @@ Amin
             const turtlesContainer = document.getElementById('turtlesContainer');
             const couplePhoto = document.getElementById('couplePhoto');
             const noPhotoText = document.getElementById('noPhotoText');
-            // Ya no usamos daysCounter, se reemplaza por counterText
             const counterText = document.getElementById('counter-text');
             const turtleToMoon = document.getElementById('turtleToMoon');
             const letterHeartsContainer = document.getElementById('letterHeartsContainer');
+            // NUEVO: Referencia al mensaje mensual
+            const mensajeMensual = document.getElementById('mensaje-mensual');
 
             heartBtn.addEventListener('click', () => {
                 landing.classList.add('hidden');
                 main.classList.add('visible');
                 startMainAnimations();
                 startTurtleToMoon();
+                actualizarContador(); // Asegura que se evalúe el día 12 al entrar
             });
 
             btnLeer.addEventListener('click', () => {
@@ -566,7 +528,7 @@ Amin
                 stopLetterAnimations();
             });
 
-            
+            // Animaciones principales
             let mainAnimationsStarted = false;
             let mainIntervals = [];
 
@@ -604,7 +566,7 @@ Amin
                 for (let i = 0; i < 4; i++) setTimeout(createTurtle, i * 700);
             }
 
-            
+            // Tortuga a la luna
             function startTurtleToMoon() {
                 const moonX = window.innerWidth - 120;
                 const moonY = 75;
@@ -617,7 +579,6 @@ Amin
                     const dx = moonX - turtleX;
                     const dy = moonY - turtleY;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-
                     if (distance < 50) {
                         turtleX = 20;
                         turtleY = window.innerHeight - 80;
@@ -626,16 +587,13 @@ Amin
                         setTimeout(moveStep, 300);
                         return;
                     }
-
                     const stepSize = 1.2;
                     const normX = dx / distance;
                     const normY = dy / distance;
                     turtleX += normX * stepSize;
                     turtleY += normY * stepSize;
-
                     turtleToMoon.style.left = turtleX + 'px';
                     turtleToMoon.style.top = turtleY + 'px';
-
                     setTimeout(moveStep, 40);
                 }
                 moveStep();
@@ -648,8 +606,8 @@ Amin
                 }
             });
 
+            // Animaciones carta
             let letterInterval = null;
-
             function startLetterAnimations() {
                 if (letterInterval) return;
                 function createLetterFloat() {
@@ -665,63 +623,63 @@ Amin
                 letterInterval = setInterval(createLetterFloat, 500);
                 for (let i = 0; i < 6; i++) setTimeout(createLetterFloat, i * 200);
             }
-
             function stopLetterAnimations() {
                 if (letterInterval) {
                     clearInterval(letterInterval);
                     letterInterval = null;
                 }
-                
                 letterHeartsContainer.innerHTML = '';
             }
 
-            // ===== CAMBIO AQUÍ: Contador de años, meses y días =====
-            const inicio = new Date(2025, 4, 12); // 12 de mayo de 2025 - Fecha de aniversario
+            // ===== CONTADOR Y MENSAJE MENSUAL =====
+            const inicio = new Date(2025, 4, 12); // 12 de mayo de 2025
 
             function actualizarContador() {
-                const ahora = new Date();
+                // Para PROBAR HOY (11/junio) como si fuera día 12, descomenta la siguiente línea:
+                 //const ahora = new Date(2026, 5, 12); // 12 de junio 2026 (mes 5 porque enero=0)
+                
+                ahora = new Date(); // Fecha real (comentar línea anterior para usar esta)
+
                 let years = ahora.getFullYear() - inicio.getFullYear();
                 let months = ahora.getMonth() - inicio.getMonth();
                 let days = ahora.getDate() - inicio.getDate();
 
-                // Ajuste si los días son negativos
                 if (days < 0) {
                     months--;
                     const ultimoMes = new Date(ahora.getFullYear(), ahora.getMonth(), 0);
                     days += ultimoMes.getDate();
                 }
-
-                // Ajuste si los meses son negativos
                 if (months < 0) {
                     years--;
                     months += 12;
                 }
 
-                // Construir la cadena de texto
+                // Mostrar el contador normal
                 let texto = 'Llevamos juntos<br>';
-
-                // Años
                 texto += years === 1 ? '1 año' : years + ' años';
-
-                // Meses (si hay)
-                if (months > 0) {
-                    texto += months === 1 ? ' y 1 mes' : ' y ' + months + ' meses';
-                }
-
-                // Días
-                if (days === 1) {
-                    texto += ' con 1 día';
-                } else {
-                    texto += ' con ' + days + ' días';
-                }
-
+                if (months > 0) texto += months === 1 ? ' y 1 mes' : ' y ' + months + ' meses';
+                texto += days === 1 ? ' con 1 día' : ' con ' + days + ' días';
                 texto += '<br>amándonos a pasitos de tortuga 🥰🐢';
-
                 counterText.innerHTML = texto;
-            }
-            actualizarContador();
-            // ===== FIN DEL CAMBIO =====
 
+                // ----- MENSAJE MENSUAL SOLO EL DÍA 12 -----
+                const diaHoy = ahora.getDate();
+                if (diaHoy === 12) {
+                    // Calcular cuántos meses cumplen (desde la fecha inicial)
+                    let totalMeses = (ahora.getFullYear() - inicio.getFullYear()) * 12 + (ahora.getMonth() - inicio.getMonth());
+                    if (ahora.getDate() < inicio.getDate()) totalMeses--; // Ajuste si el 12 cae antes del día inicial (no aplica porque aniversario es día 12)
+                    // Mostrar mensaje
+                    mensajeMensual.style.display = 'block';
+                    mensajeMensual.innerHTML = `Feliz ${totalMeses} mes${totalMeses !== 1 ? 'es' : ''} juntos, mi pricensita hermosa! 🐢🤍`;
+                } else {
+                    mensajeMensual.style.display = 'none';
+                }
+            }
+
+            // Llamar al cargar
+            actualizarContador();
+
+            // Si la foto carga, mostrarla
             if (couplePhoto.src && couplePhoto.src.trim() !== '' && !couplePhoto.src.endsWith('index.html')) {
                 couplePhoto.style.display = 'block';
                 noPhotoText.style.display = 'none';
@@ -729,7 +687,6 @@ Amin
                 couplePhoto.style.display = 'none';
                 noPhotoText.style.display = 'block';
             }
-
             couplePhoto.addEventListener('load', () => {
                 couplePhoto.style.display = 'block';
                 noPhotoText.style.display = 'none';
